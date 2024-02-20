@@ -1,0 +1,281 @@
+﻿@model WebEscuelaProject.Models.PermissionFormModel
+
+@{
+    ViewData["Title"] = "Formulario de Permisos";
+
+    <style>
+        .form-control {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .input-group-text {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .dropdown-toggle {
+            background-color: #ffffff;
+        }
+    </style>
+
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+}
+
+@{
+    List<SelectListItem> modalidadListItems = new List<SelectListItem>();
+    modalidadListItems.Add(new SelectListItem
+            {
+                Text = "Seleccione Una Opción",
+                Value = "",
+                Selected = true
+            });
+    modalidadListItems.Add(new SelectListItem
+            {
+                Text = "Presencial",
+                Value = "presencial"
+            });
+    modalidadListItems.Add(new SelectListItem
+            {
+                Text = "Teletrabajo",
+                Value = "teletrabajo"
+            });
+}
+
+@{
+    List<SelectListItem> tipoListItems = new List<SelectListItem>();
+    tipoListItems.Add(new SelectListItem
+            {
+                Text = "Seleccione Una Opción",
+                Value = "",
+                Selected = true
+            });
+    tipoListItems.Add(new SelectListItem
+            {
+                Text = "Entrada",
+                Value = "entrada"
+            });
+    tipoListItems.Add(new SelectListItem
+            {
+                Text = "Salida",
+                Value = "salida"
+            });
+}
+
+@{
+    List<SelectListItem> motivoListItems = new List<SelectListItem>();
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Seleccione Una Opción",
+                Value = "",
+                Selected = true
+            });
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Cita",
+                Value = "cita"
+            });
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Teletrabajo",
+                Value = "teletrabajo"
+            });
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Gestión Fuera de Oficina",
+                Value = "gestion"
+            });
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Enfermedad",
+                Value = "enfermedad"
+            });
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Servicio Civil",
+                Value = "servicio"
+            });
+
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Caja de Ande",
+                Value = "ande"
+            });
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Reunión",
+                Value = "reunion"
+            });
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Enfermedad Pariente 1er Grado",
+                Value = "pariente"
+            });
+
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Capacitación",
+                Value = "capacitacion"
+            });
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Estudio",
+                Value = "estudio"
+            });
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Gira",
+                Value = "gira"
+            });
+    motivoListItems.Add(new SelectListItem
+            {
+                Text = "Otro (Especifique en Observaciones)",
+                Value = "otros"
+            });
+}
+
+
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-4" style="color: black; background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+
+            <h1 style="color: black; text-align: center;">Formulario de Omisión de Marca, Permisos e Incapacidades</h1>
+            <hr />
+            @using (Html.BeginForm("SubmitPermissionForm", "Form", FormMethod.Post, new { id = "formularyForm" }))
+            {
+                <br>
+                <div class="form-group">
+                    Número de Cédula
+                    @Html.TextBoxFor(model => model.idCard, new { @class = "requiredfields form-control", @id = "idCard", @style = "background-color: white;color: black" })
+                </div>
+                <br>
+                <div class="form-group">
+                    Nombre
+                    @Html.TextBoxFor(model => model.name, new { @class = "requiredfields form-control", @id = "name", @style = "background-color: white;color: black" })
+                </div>
+                <br>
+                <div class="form-group">
+                    Primer Apellido
+                    @Html.TextBoxFor(model => model.lastname1, new { @class = "requiredfields form-control", @id = "lastname1", @style = "background-color: white;color: black" })
+                </div>
+                <br>
+                <div class="form-group">
+                    Segundo Apellido
+                    @Html.TextBoxFor(model => model.lastname2, new { @class = "requiredfields form-control", @id = "lastname2", @style = "background-color: white;color: black" })
+                </div>
+                <br>
+                <br>
+                <div class="form-group">
+                    Modalidad Laboral
+                    @Html.DropDownListFor(model => model.workMode, modalidadListItems, new { @class = "requiredfields btn dropdown-toggle form-control", @id = "workMode" })
+                </div>
+                <br>
+                <hr />
+                <br>
+
+
+                <div class="form-group">
+                    Su Horario Vigente
+                    <div class="row">
+                        <div class="col-md-5">
+
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(model => model.fromWorkingHours, new { @type = "date", @class = "requiredfields timePicker form-control", @id = "timePickerFrom" })
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <label>A</label>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(model => model.toWorkingHours, new { @type = "date", @class = "requiredfields timePicker form-control", @id = "timePickerTo" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <br>
+                <hr />
+                <div class="form-group">
+                    Tipo de Justificación u Omisión (Entrada o Salida)
+                    @Html.DropDownListFor(model => model.justificationType, tipoListItems, new { @class = "requiredfields btn dropdown-toggle form-control", @id = "justType" })
+                </div>
+                <br>
+                <div class="form-group">
+                    <label>Horario de Salida o Entrada para El Día del Permiso</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></span>
+                        @Html.TextBoxFor(model => model.justificationDate, new { @type = "date", @class = "form-control", @id = "dateTimePicker" })
+                    </div>
+                </div>
+                <br>
+                <hr />
+                <div class="form-group">
+                    Motivo
+                    @Html.DropDownListFor(model => model.reason, motivoListItems, new { @class = "requiredfields btn dropdown-toggle form-control", @id = "reason" })
+                </div>
+                <br>
+                <div class="form-group">
+                    Observaciones
+                    @Html.TextBoxFor(model => model.additionalComms, new { @class = "requiredfields form-control", @id = "additionalComms", @style = "background-color: white;color: black" })
+                </div>
+                <br>
+                <hr />
+                <br>
+                <div class="form-group d-flex flex-column align-items-center">
+                    <h4 class="text-center mb-3">Dibuje Su Firma</h4>
+                    <button type="button" id="clear" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i> Limpiar Campo de Firma</button>
+                    <br>
+                    @Html.HiddenFor(model => model.signature, new { @class = "", @id = "SignatureDataUrl" })
+                    <p class="text-center">
+                        <canvas width="300" height="200" id="signature" style="border:1px solid black"></canvas>
+                    </p>
+                </div>
+                <div class="form-group d-flex justify-content-center">
+                    <p class="warnings" hidden id="missingSignature" style="color:red; margin-top: 5px;">No puede dejar el campo de firma vacío</p>
+                </div>
+                <br>
+                <hr />
+                <br>
+                <div class="form-group d-flex justify-content-center">
+                    <p class="warnings" hidden id="missingFields" style="color:red; margin-top: 5px;">No pueden quedar campos vacíos</p>
+                </div>
+                <div class="form-group d-flex justify-content-center">
+                    <button type="submit" id="submitBTN" class="btn btn-primary"><i class="fa fa-check-square" aria-hidden="true"></i> Enviar Formulario</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <!--  Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
+    
+    <script>
+
+        flatpickr("#dateTimePicker", {
+            locale: "es",
+            time_24hr: false,
+            altInput: true,
+            enableSeconds: true,
+            altFormat: "d F Y - h:i:S K",
+            enableTime: true
+        });
+
+        flatpickr(".timePicker", {
+            locale: "es",
+            time_24hr: false,
+            altInput: true,
+            altFormat: "h:i K",
+            enableTime: true,
+            noCalendar: true
+        });
+
+    </script>
+}

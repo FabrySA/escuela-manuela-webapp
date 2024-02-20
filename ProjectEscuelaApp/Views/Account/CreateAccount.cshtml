@@ -1,0 +1,139 @@
+﻿@model WebEscuelaProject.Models.AccountModel
+
+@{
+    ViewData["Title"] = "Generar Usuario";
+
+    <style>
+        .dropdownType {
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            background-color: #ffffff;
+        }
+    </style>
+}
+
+@{
+    List<SelectListItem> roleListItems = new List<SelectListItem>();
+    roleListItems.Add(new SelectListItem
+            {
+                Text = "Seleccione Una Opción",
+                Value = "",
+                Selected = true
+            });
+    roleListItems.Add(new SelectListItem
+            {
+                Text = "Administrador",
+                Value = "admin"
+            });
+    roleListItems.Add(new SelectListItem
+            {
+                Text = "Usuario Normal",
+                Value = "normal"
+            });
+}
+
+<main class="d-flex w-100">
+    <div class="container d-flex flex-column">
+        <div class="">
+            <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5 mx-auto d-table h-100">
+
+                @if (Model != null)
+                {
+                    if (Model.ResponseMessage == "Success")
+                    {
+                        <div class="text-center mt-4">
+                            <h1 class="h2">Cuenta Creada</h1>
+                            <p class="lead">
+                                El correo electrónico registrado recibirá instrucciones para generar una contraseña y activar la cuenta, tiene 24 horas para hacerlo.
+                            </p>
+                            <a href="@Url.Action("Index", "Home")" class="btn btn-success">Regresar al Inicio</a>
+                        </div>
+                    }
+                    else if (Model.ResponseMessage == "Duplicated")
+                    {
+                        <div class="text-center mt-4">
+                            <h1 class="h2">Usuario Ya Registrado</h1>
+                            <p class="lead" style="color:red;">
+                                Este correo electrónico ya está registrado, si el usuario no recibió el correo o venció el tiempo, genere una contraseña de forma manual.
+                            </p>
+                            <a href="@Url.Action("CreateAccount", "Account")" class="btn btn-secondary">Volver a la Creación de Usuarios</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center mt-4">
+                            <h1 class="h2">¡Ocurrió Un Error!</h1>
+                            <p class="lead" style="color:red;">
+                                Ocurrió un error desconocido al crear el usuario, intente de nuevo.
+                            </p>
+                            <a href="@Url.Action("CreateAccount", "Account")" class="btn btn-secondary">Volver a la Creación de Usuarios</a>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="d-table-cell align-middle">
+
+                        <div class="text-center mt-4">
+                            <h1 class="h2">Crear Usuario</h1>
+                            <p class="lead">
+                                Cree un usuario para ingresar al sistema
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="m-sm-3">
+                                    @using (Html.BeginForm("CreateAccount", "Account", FormMethod.Post, new { @id = "signUpForm" }))
+                                    {
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Tipo de Usuario</label>
+                                            @Html.DropDownListFor(model => model.user_role, roleListItems, new {@id = "role", @class = "dropdownType btn dropdown-toggle form-control"})
+                                            <p class="warnings" id="missingRole" hidden style="color:red; margin-top: 5px;">Seleccione un Tipo de Usuario</p>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Correo Electrónico</label>
+                                            @Html.TextBoxFor(model => model.user_email, new {
+                                    @class = "form-control form-control-lg", @id = "mail", @placeholder="Ingrese su correo electrónico"})
+                                            <p class="warnings" id="missingMail" hidden style="color:red; margin-top: 5px;">Ingrese Un Correo Electrónico Válido</p>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Nombre</label>
+                                            @Html.TextBoxFor(model => model.user_firstname, new
+                                    {@class = "form-control form-control-lg", @id = "name", @placeholder="Ingrese el nombre"})
+                                            <p class="warnings" id="missingName" hidden style="color:red; margin-top: 5px;">Ingrese El Nombre</p>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Primer Apellido</label>
+                                            @Html.TextBoxFor(model => model.user_lastname1, new
+                                    {@class = "form-control form-control-lg", @id = "lastname1", @placeholder="Ingrese el primer apellido"})
+                                            <p class="warnings" id="missingLast1" hidden style="color:red; margin-top: 5px;">Ingrese El Apellido</p>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Segundo Apellido</label>
+                                            @Html.TextBoxFor(model => model.user_lastname2, new
+                                    {@class = "form-control form-control-lg", @id = "lastname2", @placeholder="Ingrese el segundo apellido"})
+                                            <p class="warnings" id="missingLast2" hidden style="color:red; margin-top: 5px;">Ingrese El Apellido</p>
+                                        </div>
+
+
+                                        <div class="d-grid gap-2 mt-3">
+                                            <input type="submit" value="Crear Usuario" class="btn btn-lg btn-primary" />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>
+
+
+

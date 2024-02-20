@@ -1,0 +1,89 @@
+﻿@model IEnumerable<WebEscuelaProject.Models.FormFileModel>
+
+@{
+    ViewData["Title"] = "Gestión de Permisos";
+}
+
+
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-4" style="color: black; background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+
+        <h1 style="color: black; text-align: center;">Gestión de Documentos de Omisión de Marca, Permisos e Incapacidades</h1>
+        <hr />
+    </div>
+</div>
+
+
+<table id="permissionDataTable" class="stripe hover">
+    <thead>
+        <tr>
+            <th>
+                Consecutivo
+            </th>
+            <th>
+                Nombre del Colaborador
+            </th>
+            <th>
+                Fecha de Envío
+            </th>
+            <th>
+                Nombre Archivo
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.file_consecutive_id
+                </td>
+                <td>
+                    @item.user_firstname @item.user_lastname1 @item.user_lastname2
+                </td>
+                <td>
+                    @item.filedate
+                </td>
+                <td>
+                    @item.filename
+                </td>
+                <td>
+                    @if (item.filecontent != null)
+                    {
+                        var base64 = Convert.ToBase64String(item.filecontent);
+                        var pdfDataUri = $"data:application/pdf;base64,{base64}";
+
+                        var abrirPdfId = $"abrirPdf_{item.file_id}";
+                        var descargarPdfId = $"descargarPdf_{item.file_id}";
+
+                        <button id="@abrirPdfId" class="btn btn-info" onclick="openPDF('@item.filename', '@pdfDataUri')">
+                            <i class="fa fa-external-link" aria-hidden="true"></i> Abrir
+                        </button>
+                        <text>-</text>
+                        <button id="" class="btn btn-success"
+                                onclick="downloadPDF('@item.filename', '@pdfDataUri')">
+                            Descargar <i class="fa fa-download" aria-hidden="true"></i>
+                        </button>
+
+                    }
+                    else
+                    {
+                        <p>No se encontraron datos del PDF.</p>
+                    }
+
+                </td>
+                <td>
+                    <button id="@item.file_id" class="btn btn-danger" onclick="deleteFile('permission', @item.file_id, 'permissionDataTable', '@item.filename')">
+                        Eliminar <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

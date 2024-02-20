@@ -1,0 +1,59 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.leftMenuText {
+    font-size: small;
+}
+
+.content {
+    background-image: url(../Template/img/indexBG.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.content-box {
+    background-color: #f8f9fa;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 5%;
+}
+
+.vertical-button {
+    display: block;
+    width: 70%;
+    margin-bottom: 5px;
+}
+
+
+.order-1 {
+    order: 1;
+}
+
+.order-2 {
+    order: 2;
+}
+
+.order-3 {
+    order: 3;
+}
+
+/*  .strip1 {
+            background-color:  lightgray !important;
+        } */

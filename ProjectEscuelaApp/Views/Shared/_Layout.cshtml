@@ -1,0 +1,324 @@
+﻿@{
+    var username = "";
+    var mail = "";
+    var role = "";
+
+    if (@Context.Session.GetString("username") != null)
+    {
+        username = @Context.Session.GetString("username");
+        mail = @Context.Session.GetString("usermail");
+        role = @Context.Session.GetString("user_role");
+    }
+}
+
+<html>
+
+<head>
+
+    <title>@ViewData["Title"]</title>
+    <link rel="shortcut icon" href="~/Template/img/logoEscuela.png" />
+
+    <!-- Plantilla Varios -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/DataTables/datatables.min.css" />
+    <!-- CSS Plantilla -->
+    <link href="~/Template/css/app.css" rel="stylesheet">
+
+    <!-- CSS Propio -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+
+        <!---------- Sidebar ---------->
+
+        <nav id="sidebar" class="sidebar js-sidebar">
+            <div class="sidebar-content js-simplebar">
+
+                <a class="sidebar-brand" href='@Url.Action("Index", "Home")'>
+
+                    @if (@Context.Session.GetString("user_role") != "admin")
+                    {
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                            <img src="~/Template/img/logoEscuela.png" class="avatar img-fluid rounded me-1" />
+                            <br>
+                            <span class="align-middle">Escuela Manuela Santamaría </span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                            <img src="~/Template/img/logoEscuela.png" class="avatar img-fluid rounded me-1" />
+                            <br>
+                            <span class="align-middle">Administración <br>Escuela Manuela Santamaría </span>
+                        </div>
+                    }
+                </a>
+                <ul class="sidebar-nav">
+
+                    <li class="sidebar-header">
+                        Trámites
+                    </li>
+
+                    <li class="sidebar-item menu-option" id="inabilityform">
+                        <a class="sidebar-link active" href='@Url.Action("InabilityForm", "Form")'>
+                            <i class="align-middle" data-feather="file-text"></i> <span class="leftMenuText align-middle">Formulario de Incapacidad</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item menu-option" id="permissionform">
+                        <a class="sidebar-link" href='@Url.Action("PermissionForm", "Form")'>
+                            <i class="align-middle" data-feather="file-text"></i> <span class="leftMenuText align-middle">Formulario de Permisos</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item menu-option" id="uploadplan">
+                        <a class="sidebar-link" href='@Url.Action("UploadPlan", "File")'>
+                            <i class="align-middle" data-feather="file-plus"></i> <span class="leftMenuText align-middle">Cargar Planeamientos</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item menu-option" id="uploadmiscfile">
+                        <a class="sidebar-link" href='@Url.Action("UploadMiscFile", "File")'>
+                            <i class="align-middle" data-feather="file-plus"></i> <span class="leftMenuText align-middle">Cargar Archivos Varios</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-header">
+                        Archivos
+                    </li>
+
+                    <li class="sidebar-item menu-option" id="templatefilelist">
+                        <a class="sidebar-link" href='@Url.Action("TemplateFileList", "FileManager")'>
+                            <i class="align-middle" data-feather="clipboard"></i> <span class="leftMenuText align-middle">Machotes Disponibles</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item menu-option" id="newsletterfilelist">
+                        <a class="sidebar-link" href='@Url.Action("NewsletterFileList", "FileManager")'>
+                            <i class="align-middle" data-feather="mail"></i> <span class="leftMenuText align-middle">Circulares Disponibles</span>
+                        </a>
+                    </li>
+
+                    @if (@Context.Session.GetString("user_role") == "admin")
+                    {
+                        <li class="sidebar-header">
+                            Gestiones Administrativas
+                        </li>
+
+                        <li class="sidebar-item menu-option" id="inabilityfilelist">
+                            <a class="sidebar-link" href='@Url.Action("InabilityFileList", "FileManager")'>
+                                <i class="align-middle" data-feather="list"></i> <span class="leftMenuText align-middle">Gestión de Incapacidades</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item menu-option" id="permissionfilelist">
+                            <a class="sidebar-link" href='@Url.Action("PermissionFileList", "FileManager")'>
+                                <i class="align-middle" data-feather="list"></i> <span class="leftMenuText align-middle">Gestión de Permisos</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item menu-option" id="usersplanlist">
+                            <a class="sidebar-link" href='@Url.Action("UsersPlanList", "FileManager")'>
+                                <i class="align-middle" data-feather="list"></i> <span class="leftMenuText align-middle">Gestión de Planeamientos</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item menu-option" id="usersmisclist">
+                            <a class="sidebar-link" href='@Url.Action("UsersMiscList", "FileManager")'>
+                                <i class="align-middle" data-feather="list"></i> <span class="leftMenuText align-middle">Gestión de Archivos Varios</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item menu-option" id="adminpublicfilelist">
+                            <a class="sidebar-link" href='@Url.Action("AdminPublicFileList", "FileManager")'>
+                                <i class="align-middle" data-feather="list"></i> <span class="leftMenuText align-middle">Gestión Archivos Públicos</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item menu-option" id="uploadpublicfile">
+                            <a class="sidebar-link" href='@Url.Action("UploadPublicFile", "File")'>
+                                <i class="align-middle" data-feather="file-plus"></i> <span class="leftMenuText align-middle">Cargar Archivos Públicos</span>
+                            </a>
+                        </li>
+                    }
+
+                    <li class="sidebar-header">
+                        Cuentas de Usuario
+                    </li>
+
+                    @if (@Context.Session.GetString("user_role") == "admin")
+                    {
+                        <li class="sidebar-item menu-option" id="createaccount">
+                            <a class="sidebar-link" href='@Url.Action("CreateAccount", "Account")'>
+                                <i class="align-middle" data-feather="user-plus"></i> <span class="leftMenuText align-middle">Generar Nuevo Usuario</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item menu-option" id="userlist">
+                            <a class="sidebar-link" href='@Url.Action("UserList", "Account")'>
+                                <i class="align-middle" data-feather="users"></i> <span class="leftMenuText align-middle">Gestión de Usuarios</span>
+                            </a>
+                        </li>
+                    }
+                    <li class="sidebar-item menu-option" id="logoff">
+                        <a class="sidebar-link" href='@Url.Action("LogOff", "Account")'>
+                            <i class="align-middle" data-feather="log-out"></i> <span class="leftMenuText align-middle">Cerrar Sesión</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="main">
+
+            <!---------- Navbar Top ---------->
+
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                <a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav navbar-align">
+                        @if (@Context.Session.GetString("username") != null)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                                    <i class="align-middle" data-feather="user"></i>
+                                </a>
+
+                                <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                    <i class="align-middle" data-feather="user"></i> <span class="text-dark">@username</span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    @*                               <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="user-check"></i> Ver Datos Usuario</a>
+                                <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="refresh-cw"></i> Restablecer Contraseña</a>*@
+
+                                    @*  <div class="dropdown-divider"></div>*@
+                                    <a class="dropdown-item" href='@Url.Action("LogOff", "Account")'>
+                                        <i class="align-middle me-1" data-feather="log-out"></i>Cerrar Sesión
+                                    </a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a class="nav-icon d-inline-block d-sm-none">
+                                    <i class="align-middle" data-feather="user"></i>
+                                </a>
+
+                                <a class="nav-link d-none d-sm-inline-block">
+                                    <i class="align-middle" data-feather="user"></i> <span class="text-dark">@username</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </nav>
+
+            <!---------- Contenido Principal ---------->
+
+            <main class="content">
+                <div class="content-box">
+                    @RenderBody()
+                </div>
+            </main>
+
+            <!---------- Footer ---------->
+            @if (@Context.Session.GetString("user_role") == "admin")
+            {
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row text-muted">
+                            <div class="col-6 text-start">
+                                <p class="mb-0">
+                                    <a class="text-muted" style="text-decoration:none;cursor:default"><strong>Sistema Administrativo</strong></a> -
+                                    <a class="text-muted" style="text-decoration:none;cursor:default"><strong>Escuela Manuela Santamaría Rodríguez</strong></a>
+                                </p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <img src="~/Template/img/logoEscuela.png" class="avatar img-fluid rounded me-1" />
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            }
+            else
+            {
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row text-muted">
+                            <div class="col-6 text-start">
+                                <p class="mb-0">
+                                    <a class="text-muted" style="text-decoration:none;cursor:default"><strong>Escuela Manuela Santamaría Rodríguez</strong></a>
+                                </p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <img src="~/Template/img/logoEscuela.png" class="avatar img-fluid rounded me-1" />
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            }
+
+        </div>
+    </div>
+    <!--  JQuery  -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!--  JQuery DataTables  -->
+    <script src="~/DataTables/datatables.min.js"></script>
+    <script src="~/DataTables/init-datatables.js"></script>
+    <!--  MomentJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.4/locale/es.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.13.7/sorting/datetime-moment.js"></script>
+    <!--  SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--  SignaturePad (szimek) -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+
+    <!--  JS Plantilla -->
+    <script src="~/Template/js/app.js"></script>
+
+    <!--  JS Propio -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+
+        //Esto permite que el Sidebar de la izquierda de la plantilla coloque un contorno sobre el menu-option elegido según la página.
+        //Cada item del nav tiene un id el cual es la misma acción del controlador en minúscula.
+
+        var selectedId = ('@(ViewContext.RouteData.Values["action"] as string)').toLowerCase();
+
+        if (selectedId === 'miscfilelist') {
+            selectedId = 'usersmisclist'
+        }
+
+        if (selectedId === 'planfilelist') {
+            selectedId = 'usersplanlist'
+        }
+
+        $('.menu-option[id=' + selectedId + ']').addClass('active');
+
+        $('.menu-option').on('click', function () {
+            $('.menu-option').removeClass('active');
+            $(this).addClass('active');
+        });
+
+    </script>
+
+     @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

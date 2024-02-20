@@ -1,0 +1,86 @@
+﻿@model IEnumerable<WebEscuelaProject.Models.AccountModel>
+
+@{
+    ViewData["Title"] = "Gestión Planeamientos";
+
+
+    <style>
+        .highlight {
+            background-color: #ffffff;
+            transition: background-color 0.3s ease;
+        }
+
+            .highlight:hover {
+                background-color: #222e3c;
+                color: white;
+            }
+
+
+        .content {
+        }
+
+    </style>
+}
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-4" style="color: black; background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+
+        <h1 style="color: black; text-align: center;">Gestión de Planeamientos</h1>
+        <hr />
+    </div>
+</div>
+
+<div>
+    <table id="userDataTable">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    Seleccione un usuario para ver los planeamientos correspondientes
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.user_id
+                    </td>
+                    <td style="cursor:pointer" class="highlight">
+                        @item.user_firstname @item.user_lastname1 @item.user_lastname2
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+
+            var tabla = $('#userDataTable').DataTable();
+
+            $('#userDataTable tbody').on('click', 'tr', function () {
+
+                var data = tabla.row(this).data();
+
+                if (data) {
+                    var id = data[0];
+                    window.location.href = '/FileManager/PlanFileList?id=' + id;
+                }
+            });
+        });
+    </script>
+
+}
+
+
+
+
+

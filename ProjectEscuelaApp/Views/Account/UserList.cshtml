@@ -1,0 +1,111 @@
+﻿@model IEnumerable<WebEscuelaProject.Models.AccountModel>
+
+@{
+    ViewData["Title"] = "Gestión de Usuarios";
+}
+
+
+
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-4" style="color: black; background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+
+        <h1 style="color: black; text-align: center;">Gestión de Usuarios</h1>
+        <hr />
+    </div>
+</div>
+
+<div>
+    <table id="userListDataTable" class="stripe hover">
+        <thead>
+            <tr>
+                <th hidden>
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Correo Electrónico
+                </th>
+                <th>
+                    Tipo de Usuario
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td hidden>
+                        @item.user_id
+                    </td>
+                    <td>
+                        @item.user_firstname @item.user_lastname1 @item.user_lastname2
+                    </td>
+                    <td>
+                        @item.user_email
+                    </td>
+                    <td>
+                        @if (string.Compare(item.user_role, "admin") == 0)
+                        {
+                            <text>Administrador</text>
+                        }
+                        else
+                        {
+                            <text>Usuario Normal</text>
+                        }
+                    </td>
+                    <td>
+                        @if (@item.user_isActive)
+                        {
+                            <text>Activo</text>
+                        }
+                        else
+                        {
+                            <text>Desactivado</text>
+                        }
+                    </td>
+                    <td>
+                        @if (@item.user_isActive)
+                        {
+                            <a href='@Url.Action("ToggleAccount", "Account", new { id = item.user_id})'>
+                                <button type="button" class="btn btn-danger">Desactivar <i class="align-middle" data-feather="eye-off"></i></button>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href='@Url.Action("ToggleAccount", "Account", new { id = item.user_id})'>
+                                <button type="button" class="btn btn-success">Activar <i class="align-middle" data-feather="eye"></i></button>
+                            </a>
+                        }
+                    </td>
+                    <td>
+                        <a href='@Url.Action("AdminResetPassword", "Account", new { id = item.user_id})'>
+                            <button type="button" class="btn btn-primary">Cambiar Contraseña <i class="align-middle" data-feather="edit"></i></button>
+                        </a>
+                    </td>
+                    <td>
+                        <button id="@item.user_id" class="btn btn-danger" onclick="deleteAccount(@item.user_id, '@item.user_email')">
+                            Eliminar <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+

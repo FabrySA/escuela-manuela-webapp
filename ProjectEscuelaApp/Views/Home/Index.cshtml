@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-4 text-center" style="color: black; background-color: #f8f9fa; padding: 20px; border-radius: 10px; position: relative;">
+
+        <img src="~/Template/img/logoEscuela.png" alt="Logo Escuela" style="max-width: 20%; margin-bottom: 20px;">
+
+        <h1 style="color: black;">Escuela Manuela Santamaría Rodríguez</h1>
+        <hr />
+         <br>
+        <h2 style="color: black;">¡Bienvenido(a) @Context.Session.GetString("user_firstname")!</h2>
+        <br>
+        <p style="color: black;">Navegue por el menú de la izquierda para elegir una opción</p>
+        <br>
+    </div>
+</div>
+
+
+
