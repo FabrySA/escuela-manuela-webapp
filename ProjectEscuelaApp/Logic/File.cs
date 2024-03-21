@@ -12,7 +12,7 @@ namespace WebEscuelaProject.Logic
             {
                 var file = fileObj.file;
                 var file_extension = Path.GetExtension(file.FileName)?.ToLowerInvariant();
-                string[] validExtensions = { ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".txt", ".rtf", ".odt" };
+                string[] validExtensions = { ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".txt", ".rtf", ".odt", ".xlsm", ".xlsb" };
 
 
                 if (validExtensions.Contains(file_extension))
@@ -59,7 +59,7 @@ namespace WebEscuelaProject.Logic
             {
                 var file = fileObj.file;
                 var file_extension = Path.GetExtension(file.FileName)?.ToLowerInvariant();
-                string[] validExtensions = { ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".txt", ".rtf", ".odt" };
+                string[] validExtensions = { ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".txt", ".rtf", ".odt", ".xlsm", ".xlsb" };
 
                 if (validExtensions.Contains(file_extension))
                 {
@@ -106,7 +106,7 @@ namespace WebEscuelaProject.Logic
             {
                 var file = fileObj.file;
                 var file_extension = Path.GetExtension(file.FileName)?.ToLowerInvariant();
-                string[] validExtensions = { ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".txt", ".rtf", ".odt" };
+                string[] validExtensions = { ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".txt", ".rtf", ".odt", ".xlsm", ".xlsb" };
 
                 if (validExtensions.Contains(file_extension))
                 {

@@ -479,7 +479,7 @@
 
 //-------------------Verify Extension when Uploading Files------------------------
 function isFileValid() {
-    var allowedExtensions = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.txt', '.rtf', '.odt'];
+    var allowedExtensions = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.txt', '.rtf', '.odt', '.xlsm', '.xlsb'];
     var fileName = $('#fileInput').val();
 
     var fileExtension = fileName.split('.').pop();
